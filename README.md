@@ -1,17 +1,19 @@
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 
-<a id="readme-top"></a>
-
-[<img alt="Figma for your React App" src="https://github.com/user-attachments/assets/c4a0db58-ecf2-4461-b6be-ce84749a3922">
-](https://youtu.be/RSX_3EaO5eU)
-
 <div align="center">
+<img width="800" alt="header image" src="assets/web-preview.png">
 <h3 align="center">Onlook</h3>
   <p align="center">
-    The first browser-powered visual editor.
+    Cursor for Designers
     <br />
-    <a href="https://github.com/onlook-dev/onlook/wiki"><strong>Explore the docs »</strong></a>
+    <a href="https://docs.onlook.com"><strong>Explore the docs »</strong></a>
     <br />
+  </p>
+  <p align="center">
+    👨‍💻👩‍💻👨‍💻
+    <a href="https://www.ycombinator.com/companies/onlook/jobs/e4gHv1n-founding-engineer-fullstack">We're hiring engineers in SF!</a>
+    👩‍💻👨‍💻👩‍💻
+  </p>
     <br />
     <a href="https://youtu.be/RSX_3EaO5eU?feature=shared">View Demo</a>
     ·
@@ -37,109 +39,198 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 [![Twitter][twitter-shield]][twitter-url]
 
+[中文](https://www.readme-i18n.com/onlook-dev/onlook?lang=zh) |
+[Español](https://www.readme-i18n.com/onlook-dev/onlook?lang=es) |
+[Deutsch](https://www.readme-i18n.com/onlook-dev/onlook?lang=de) |
+[français](https://www.readme-i18n.com/onlook-dev/onlook?lang=fr) |
+[Português](https://www.readme-i18n.com/onlook-dev/onlook?lang=pt) |
+[Русский](https://www.readme-i18n.com/onlook-dev/onlook?lang=ru) |
+[日本語](https://www.readme-i18n.com/onlook-dev/onlook?lang=ja) |
+[한국어](https://www.readme-i18n.com/onlook-dev/onlook?lang=ko)
+
 </div>
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li><a href="#installation">Installation</a></li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-    <li><a href="#license">License</a></li>
-  </ol>
-</details>
+# An Open-Source, Visual-First Code Editor
 
-# The open-source visual editor for your React Apps
+Craft websites, prototypes, and designs with AI in Next.js + TailwindCSS. Make
+edits directly in the browser DOM with a visual editor. Design in realtime with
+code. An open-source alternative to Bolt.new, Lovable, V0, Replit Agent, Figma
+Make, Webflow, etc.
 
-Seamlessly integrate with any website or web app running on React + TailwindCSS, and make live edits directly in the browser DOM. Customize your design, control your codebase, and push changes your changes without compromise.
+### 🚧 🚧 🚧 Onlook is still under development 🚧 🚧 🚧
 
-https://github.com/user-attachments/assets/c9bac609-5b05-417f-b2b2-e57d650d0dd6
+We're actively looking for contributors to help make Onlook for Web an
+incredible prompt-to-build experience. Check the
+[open issues](https://github.com/onlook-dev/onlook/issues) for a full list of
+proposed features (and known issues), and join our
+[Discord](https://discord.gg/hERDfFZCsH) to collaborate with hundreds of other
+builders.
 
-![Export-1724891449817](https://github.com/user-attachments/assets/1f317ae1-6453-4a00-8801-f005ccc7efdb)
+## What you can do with Onlook:
 
-### Built With
+- [x] Create Next.js app in seconds
+  - [x] Start from text or image
+  - [x] Use prebuilt templates
+  - [ ] Import from Figma
+  - [ ] Import from GitHub repo
+  - [ ] Make a PR to a GitHub repo
+- [x] Visually edit your app
+  - [x] Use Figma-like UI
+  - [x] Preview your app in real-time
+  - [x] Manage brand assets and tokens
+  - [x] Create and navigate to Pages
+  - [x] Browse layers
+  - [x] Manage project Images
+  - [x] Detect and use Components – _Previously in
+        [Onlook Desktop](https://github.com/onlook-dev/desktop)_
+  - [ ] Drag-and-drop Components Panel
+  - [x] Use Branching to experiment with designs
+- [x] Development Tools
+  - [x] Real-time code editor
+  - [x] Save and restore from checkpoints
+  - [x] Run commands via CLI
+  - [x] Connect with app marketplace
+- [x] Deploy your app in seconds
+  - [x] Generate sharable links
+  - [x] Link your custom domain    
+- [ ] Collaborate with your team
+  - [x] Real-time editing
+  - [ ] Leave comments
+- [ ] Advanced AI capabilities
+  - [x] Queue multiple messages at once
+  - [ ] Use Images as references and as assets in a project
+  - [ ] Setup and use MCPs in projects
+  - [ ] Allow Onlook to use itself as a toolcall for branch creation and iteration
+- [ ] Advanced project support
+  - [ ] Support non-NextJS projects
+  - [ ] Support non-Tailwind projects
 
--   [![React][React.js]][React-url]
--   [![Electron][Electron.js]][Electron-url]
--   [![Tailwind][TailwindCSS]][Tailwind-url]
--   [![Vite][Vite.js]][Vite-url]
-
-## Stay up-to-date
-
-Onlook officially launched our first version of Onlook on July 08, 2024 and we've shipped a ton since then. Watch releases of this repository to be notified of future updates, and you can follow along with us on [LinkedIn](https://www.linkedin.com/company/onlook-dev) or [Substack](https://onlook.substack.com/) where we write a weekly newsletter.
-
-<!-- ![Starproject](https://github.com/user-attachments/assets/07742b21-dd98-4be3-b6a6-13d8132af398) -->
+![Onlook-GitHub-Example](https://github.com/user-attachments/assets/642de37a-72cc-4056-8eb7-8eb42714cdc4)
 
 ## Getting Started
 
-![image](https://github.com/user-attachments/assets/18b6ad5a-1d5a-4396-af8c-8b85936acf39)
-
-### Installation
-
- 1. Visit [onlook.dev](https://onlook.dev/) to download the app.
- 2. Run locally following [this guide](https://github.com/onlook-dev/onlook/wiki/Building-from-source)
+Use our [hosted app](https://onlook.com) or
+[run locally](https://docs.onlook.com/developers/running-locally).
 
 ### Usage
 
-Onlook will run on any React project, bring your own React project or create one using Onlook
+Onlook will run on any Next.js + TailwindCSS project, import your project into
+Onlook or start from scratch within the editor.
 
-<img width="676" alt="Screenshot 2024-11-27 at 9 36 47 AM" src="https://github.com/user-attachments/assets/ec5c9bb2-7d0a-4754-962e-5d0c9fe0d706">
+Use the AI chat to create or edit a project you're working on. At any time, you
+can always right-click an element to open up the exact location of the element
+in code.
 
-## Roadmap
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/4ad9f411-b172-4430-81ef-650f4f314666" />
 
-![image](https://github.com/user-attachments/assets/f64b51df-03be-44d1-ae35-82e6dc960d06)
+<br>
 
-See how we're tracking towards major [milestones](<[url](https://github.com/onlook-dev/onlook/milestones)>), and read the [wiki](https://github.com/onlook-dev/onlook/wiki/Roadmap) for details on each version of Onlook. Here's a rough overview of some of the major features we're looking at:
+Draw-in new divs and re-arrange them within their parent containers by
+dragging-and-dropping.
 
--   [x] Browser
--   [x] Editor
--   [x] Write-to-code
--   [X] AI chat
--   [ ] Variables
--   [ ] Components
--   [ ] Hosting
+<img width="600" alt="image" src="assets/insert-div.png">
 
-Also check the [open issues](https://github.com/onlook-dev/onlook/issues) for a full list of proposed features (and known issues).
+<br>
+
+Preview the code side-by-side with your site design.
+
+<img width="600" alt="image" src="assets/code-connect.png">
+
+<br>
+
+Use Onlook's editor toolbar to adjust Tailwind styles, directly manipulate
+objects, and experiment with layouts.
+
+<img width="600" alt="image" src="assets/text-styling.png" />
+
+## Documentation
+
+For full documentation, visit [docs.onlook.com](https://docs.onlook.com)
+
+To see how to Contribute, visit
+[Contributing to Onlook](https://docs.onlook.com/developers) in our docs.
+
+## How it works
+
+<img width="676" alt="architecture" src="assets/architecture.png">
+
+1. When you create an app, we load the code into a web container
+2. The container runs and serves the code
+3. Our editor receives the preview link and displays it in an iFrame
+4. Our editor reads and indexes the code from the container
+5. We instrument the code in order to map elements to their place in code
+6. When the element is edited, we edit the element in our iFrame, then in code
+7. Our AI chat also has code access and tools to understand and edit the code
+
+This architecture can theoretically scale to any language or framework that
+displays DOM elements declaratively (e.g. jsx/tsx/html). We are focused on
+making it work well with Next.js and TailwindCSS for now.
+
+For a full walkthrough, check out our
+[Architecture Docs](https://docs.onlook.com/developers/architecture).
+
+### Our Tech Stack
+
+#### Front-end
+
+- [Next.js](https://nextjs.org/) - Full stack
+- [TailwindCSS](https://tailwindcss.com/) - Styling
+- [tRPC](https://trpc.io/) - Server interface
+
+#### Database
+
+- [Supabase](https://supabase.com/) - Auth, Database, Storage
+- [Drizzle](https://orm.drizzle.team/) - ORM
+
+#### AI
+
+- [AI SDK](https://ai-sdk.dev/) - LLM client
+- [OpenRouter](https://openrouter.ai/) - LLM model provider
+- [Morph Fast Apply](https://morphllm.com) - Fast apply model provider
+- [Relace](https://relace.ai) - Fast apply model provider
+
+#### Sandbox and hosting
+
+- [CodeSandboxSDK](https://codesandbox.io/docs/sdk) - Dev sandbox
+- [Freestyle](https://www.freestyle.sh/) - Hosting
+
+#### Runtime
+
+- [Bun](https://bun.sh/) - Monorepo, runtime, bundler
+- [Docker](https://www.docker.com/) - Container management
 
 ## Contributing
 
 ![image](https://github.com/user-attachments/assets/ecc94303-df23-46ae-87dc-66b040396e0b)
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also [open issues](https://github.com/onlook-dev/onlook/issues).
+If you have a suggestion that would make this better, please fork the repo and
+create a pull request. You can also
+[open issues](https://github.com/onlook-dev/onlook/issues).
 
 See the [CONTRIBUTING.md](CONTRIBUTING.md) for instructions and code of conduct.
 
 #### Contributors
 
 <a href="https://github.com/onlook-dev/onlook/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=onlook-dev/onlook&t=1" />
+  <img src="https://contrib.rocks/image?repo=onlook-dev/onlook" />
 </a>
 
 ## Contact
 
 ![image](https://github.com/user-attachments/assets/60684b68-1925-4550-8efd-51a1509fc953)
 
--   Team: [Discord](https://discord.gg/hERDfFZCsH) - [Twitter](https://twitter.com/onlookdev) - [LinkedIn](https://www.linkedin.com/company/onlook-dev/) - [Email](mailto:contact@onlook.dev)
--   Project: [https://github.com/onlook-dev/onlook](https://github.com/onlook-dev/onlook)
--   Website: [https://onlook.dev](https://onlook.dev)
-
-## Acknowledgments
-
-Projects we're inspired by:
-
--   [Visbug](https://github.com/GoogleChromeLabs/ProjectVisBug)
--   [Responsively](https://github.com/responsively-org/responsively-app)
--   [Supabase](https://github.com/supabase/supabase)
--   [ShadCN](https://github.com/shadcn-ui/ui)
--   [hymhub/css-to-tailwind](https://github.com/hymhub/css-to-tailwind)
+- Team: [Discord](https://discord.gg/hERDfFZCsH) -
+  [Twitter](https://twitter.com/onlookdev) -
+  [LinkedIn](https://www.linkedin.com/company/onlook-dev/) -
+  [Email](mailto:contact@onlook.com)
+- Project:
+  [https://github.com/onlook-dev/onlook](https://github.com/onlook-dev/onlook)
+- Website: [https://onlook.com](https://onlook.com)
 
 ## License
 
-Distributed under the Apache 2.0 License. See [LICENSE.md](LICENSE.md) for more information.
+Distributed under the Apache 2.0 License. See [LICENSE.md](LICENSE.md) for more
+information.
 
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
@@ -168,3 +259,5 @@ Distributed under the Apache 2.0 License. See [LICENSE.md](LICENSE.md) for more 
 [Vite.js]: https://img.shields.io/badge/vite-%23646CFF.svg?logo=vite&logoColor=white
 [Vite-url]: https://vitejs.dev/
 [product-screenshot]: assets/brand.png
+[weave-shield]: https://img.shields.io/endpoint?url=https%3A%2F%2Fapp.workweave.ai%2Fapi%2Frepository%2Fbadge%2Forg_pWcXBHJo3Li2Te2Y4WkCPA33%2F820087727&cacheSeconds=3600&labelColor=#131313
+[weave-url]: https://app.workweave.ai/reports/repository/org_pWcXBHJo3Li2Te2Y4WkCPA33/820087727

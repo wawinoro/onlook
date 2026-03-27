@@ -13,8 +13,8 @@
     },
     "scripts": {
         "clean": "rm -rf node_modules",
-        "lint": "eslint --fix .",
-        "format": "prettier --write .",
+        "lint": "eslint . --max-warnings 0",
+        "format": "eslint --fix .",
         "typecheck": "tsc --noEmit"
     },
     "keywords": [
@@ -23,11 +23,29 @@
     ],
     "author": {
         "name": "Onlook",
-        "email": "contact@onlook.dev"
+        "email": "contact@onlook.com"
     },
     "license": "Apache-2.0",
-    "homepage": "https://onlook.dev",
+    "homepage": "https://onlook.com",
     "devDependencies": {
-        "@onlook/typescript": "*"
+        "@onlook/eslint": "*",
+        "@onlook/typescript": "*",
+        "@types/culori": "^2.0.4",
+        "eslint": "^9.0.0",
+        "typescript": "^5.5.4"
+    },
+    "dependencies": {
+        "@onlook/fonts": "*",
+        "@onlook/constants": "*",
+        "browser-image-compression": "^2.0.2",
+        "culori": "^4.0.1",
+        "free-email-domains": "^1.2.16",
+        "is-subdir": "^1.2.0",
+        "mime-lite": "^1.0.3",
+        "normalize-url": "^8.0.2",
+        "strip-ansi": "^7.1.0",
+        "tailwind-merge": "^3.3.1",
+        "tldts": "^6.1.82",
+        "uuid": "^11.1.0"
     }
 }

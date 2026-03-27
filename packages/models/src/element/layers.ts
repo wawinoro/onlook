@@ -1,20 +1,25 @@
-import { z } from 'zod';
+export enum DynamicType {
+    ARRAY = 'array',
+    CONDITIONAL = 'conditional',
+    UNKNOWN = 'unknown',
+}
 
-export const DynamicTypeEnum = z.enum(['array', 'conditional', 'unknown']);
-export type DynamicType = z.infer<typeof DynamicTypeEnum>;
+export enum CoreElementType {
+    COMPONENT_ROOT = 'component-root',
+    BODY_TAG = 'body-tag',
+}
 
-const LayerNodeSchema = z.object({
-    domId: z.string(),
-    webviewId: z.string(),
-    instanceId: z.string().nullable(),
-    oid: z.string().nullable(),
-    textContent: z.string(),
-    tagName: z.string(),
-    isVisible: z.boolean(),
-    dynamicType: DynamicTypeEnum.optional(),
-    component: z.string().nullable(),
-    children: z.array(z.string()).nullable(),
-    parent: z.string().nullable(),
-});
-
-export type LayerNode = z.infer<typeof LayerNodeSchema>;
+export interface LayerNode {
+    domId: string;
+    frameId: string;
+    instanceId: string | null;
+    oid: string | null;
+    textContent: string;
+    tagName: string;
+    isVisible: boolean;
+    dynamicType: DynamicType | null;
+    coreElementType: CoreElementType | null;
+    component: string | null;
+    children: string[] | null;
+    parent: string | null;
+}

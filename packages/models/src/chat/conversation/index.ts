@@ -1,13 +1,16 @@
-import { z } from 'zod';
-import { ChatMessageSchema } from '../message';
+import type { ChatSuggestion } from '../suggestion';
 
-export const ChatConversationSchema = z.object({
-    id: z.string(),
-    projectId: z.string(),
-    displayName: z.string().nullable(),
-    messages: z.array(ChatMessageSchema),
-    createdAt: z.string().datetime(),
-    updatedAt: z.string().datetime(),
-});
+export enum AgentType {
+    ROOT = "root",
+    USER = "user",
+}
 
-export type ChatConversation = z.infer<typeof ChatConversationSchema>;
+export interface ChatConversation {
+    id: string;
+    agentType: AgentType;
+    title: string | null;
+    projectId: string;
+    createdAt: Date;
+    updatedAt: Date;
+    suggestions: ChatSuggestion[];
+}

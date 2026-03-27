@@ -1,38 +1,63 @@
-import { z } from 'zod';
-import { TemplateNodeSchema } from '../../element/templateNode';
+import type { Branch } from '../../project';
 
 export enum MessageContextType {
     FILE = 'file',
-    HIGHLIGHTED = 'selected',
+    HIGHLIGHT = 'highlight',
     IMAGE = 'image',
+    ERROR = 'error',
+    BRANCH = 'branch',
+    AGENT_RULE = 'agent_rule',
 }
 
-export const BaseMessageContextSchema = z.object({
-    type: z.nativeEnum(MessageContextType),
-    value: z.string(),
-    name: z.string(),
-});
+type BaseMessageContext = {
+    type: MessageContextType;
+    content: string;
+    displayName: string;
+};
 
-export const FileMessageContextSchema = BaseMessageContextSchema.extend({
-    type: z.literal('file'),
-});
+export type BranchMessageContext = BaseMessageContext & {
+    type: MessageContextType.BRANCH;
+    branch: Branch;
+};
 
-export const HighlightedMessageContextSchema = BaseMessageContextSchema.extend({
-    type: z.literal('selected'),
-    templateNode: TemplateNodeSchema,
-});
+export type FileMessageContext = BaseMessageContext & {
+    type: MessageContextType.FILE;
+    path: string;
+    branchId: string;
+};
 
-export const ImageMessageContextSchema = BaseMessageContextSchema.extend({
-    type: z.literal('image'),
-});
+export type HighlightMessageContext = BaseMessageContext & {
+    type: MessageContextType.HIGHLIGHT;
+    path: string;
+    start: number;
+    end: number;
+    oid?: string;
+    branchId: string;
+};
 
-export const ChatMessageContextSchema = z.discriminatedUnion('type', [
-    FileMessageContextSchema,
-    HighlightedMessageContextSchema,
-    ImageMessageContextSchema,
-]);
+export type ImageMessageContext = BaseMessageContext & {
+    type: MessageContextType.IMAGE;
+    mimeType: string;
+    id?: string;
+    source: 'external' | 'local';
+    path?: string;
+    branchId?: string;
+};
 
-export type FileMessageContext = z.infer<typeof FileMessageContextSchema>;
-export type HighlightedMessageContext = z.infer<typeof HighlightedMessageContextSchema>;
-export type ImageMessageContext = z.infer<typeof ImageMessageContextSchema>;
-export type ChatMessageContext = z.infer<typeof ChatMessageContextSchema>;
+export type ErrorMessageContext = BaseMessageContext & {
+    type: MessageContextType.ERROR;
+    branchId: string;
+};
+
+export type AgentRuleMessageContext = BaseMessageContext & {
+    type: MessageContextType.AGENT_RULE;
+    path: string;
+};
+
+export type MessageContext =
+    | HighlightMessageContext
+    | ImageMessageContext
+    | ErrorMessageContext
+    | AgentRuleMessageContext
+    | BranchMessageContext
+    | FileMessageContext;

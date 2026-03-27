@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useRef, useCallback, type DependencyList } from 'react';
+import { useCallback, useRef, type DependencyList } from 'react';
 
 interface UsePointerStrokeOptions<T extends Element, InitData> {
     onBegin: (e: React.PointerEvent<T>) => InitData;
@@ -40,7 +40,7 @@ export function usePointerStroke<T extends Element = Element, InitData = void>(
     onPointerMove: (e: React.PointerEvent<T>) => void;
     onPointerUp: (e: React.PointerEvent<T>) => void;
 } {
-    const stateRef = useRef<State<InitData>>();
+    const stateRef = useRef<State<InitData> | null>(null);
 
     const onPointerDown = useCallback((e: React.PointerEvent<T>) => {
         if (e.button !== 0) {
@@ -71,14 +71,26 @@ export function usePointerStroke<T extends Element = Element, InitData = void>(
         const { initX, initY, lastX, lastY } = stateRef.current;
 
         if (e.buttons === 0) {
-            // TODO: Looks like onPointerUp is not called accidentally
+            // In some cases `onPointerUp` will not fire. Finish the stroke here
+            // and forward the last movement so state remains consistent.
+            const deltaX = x - lastX;
+            const deltaY = y - lastY;
+            stateRef.current.lastX = x;
+            stateRef.current.lastY = y;
+            onMove(e, {
+                totalDeltaX: x - initX,
+                totalDeltaY: y - initY,
+                deltaX,
+                deltaY,
+                initData: stateRef.current.initData,
+            });
             e.currentTarget.releasePointerCapture(e.pointerId);
             onEnd?.(e, {
                 totalDeltaX: x - initX,
                 totalDeltaY: y - initY,
                 initData: stateRef.current.initData,
             });
-            stateRef.current = undefined;
+            stateRef.current = null;
             return;
         }
 
@@ -109,7 +121,7 @@ export function usePointerStroke<T extends Element = Element, InitData = void>(
             totalDeltaY: y - initY,
             initData: stateRef.current.initData,
         });
-        stateRef.current = undefined;
+        stateRef.current = null;
     }, deps as DependencyList);
 
     return { onPointerDown, onPointerMove, onPointerUp };

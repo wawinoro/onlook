@@ -1,11 +1,12 @@
 import colorNamer from 'color-namer';
 import type cssColorNames from 'css-color-names';
+import { oklch, rgb } from 'culori';
 import parseCSSColor from 'parse-css-color';
 import { isNearEqual } from './math';
 
 export function isColorEmpty(colorValue: string) {
-    const EMPTY_COLOR_VALUES = ['', 'initial', 'transparent', 'none', '#00000000'];
-    return EMPTY_COLOR_VALUES.includes(colorValue);
+    const color = Color.from(colorValue);
+    return color.a === 0 || color.isEqual(Color.transparent);
 }
 
 export function formatHexString(hex: string): string {
@@ -17,6 +18,136 @@ export function formatHexString(hex: string): string {
         return '#' + hex;
     }
     return hex;
+}
+
+export function parseHslValue(value: string): Color | null {
+    let h = 0,
+        s = 0,
+        l = 0,
+        a = 1;
+
+    if (value.includes('hsl')) {
+        const hslMatch = value.match(
+            /hsla?\(\s*([^,\s]+)(?:deg)?\s*[,\s]\s*([^,\s]+)%\s*[,\s]\s*([^,\s]+)%\s*(?:[,/]\s*([^)]+))?\s*\)/,
+        );
+
+        if (hslMatch) {
+            // Parse hue with unit support
+            const hueValue = hslMatch[1];
+            h = parseHueValue(hueValue ?? '0');
+            s = parseFloat(hslMatch[2] ?? '0');
+            l = parseFloat(hslMatch[3] ?? '0');
+
+            if (hslMatch[4]) {
+                a = hslMatch[4].endsWith('%')
+                    ? parseFloat(hslMatch[4]) / 100
+                    : parseFloat(hslMatch[4]);
+            }
+        } else {
+            return null;
+        }
+    } else {
+        // Parse space-separated format
+        const parts = value.split(/\s+/);
+        if (parts.length >= 3) {
+            h = parseFloat(parts[0] ?? '0');
+            s = parseFloat(parts[1]?.replace('%', '') ?? '0');
+            l = parseFloat(parts[2]?.replace('%', '') ?? '0');
+
+            if (parts.length >= 4) {
+                a = parts[3]?.endsWith('%')
+                    ? parseFloat(parts[3]) / 100
+                    : parseFloat(parts[3] ?? '0');
+            }
+        } else {
+            return null;
+        }
+    }
+
+    // Normalize values
+    h = ((h % 360) + 360) % 360;
+    s = Math.max(0, Math.min(100, s));
+    l = Math.max(0, Math.min(100, l));
+    a = Math.max(0, Math.min(1, a));
+
+    return Color.hsl({
+        h: h / 360,
+        s: s / 100,
+        l: l / 100,
+        a,
+    });
+}
+
+function parseHueValue(value: string): number {
+    if (value.endsWith('turn')) {
+        return parseFloat(value) * 360;
+    }
+    if (value.endsWith('rad')) {
+        return parseFloat(value) * (180 / Math.PI);
+    }
+    if (value.endsWith('grad')) {
+        return parseFloat(value) * 0.9;
+    }
+    return parseFloat(value);
+}
+
+export function parseOklchValue(value: string): Color | null {
+    let l = 0,
+        c = 0,
+        h = 0,
+        a = 1;
+
+    if (value.includes('oklch')) {
+        const oklchMatch = value.match(
+            /oklch\(\s*([^,\s]+)%?\s*[,\s]\s*([^,\s]+)\s*[,\s]\s*([^,\s]+)(?:deg)?\s*(?:[,/]\s*([^)]+))?\s*\)/,
+        );
+
+        if (oklchMatch) {
+            l = oklchMatch[1]?.trim().endsWith('%')
+                ? parseFloat(oklchMatch[1]) / 100
+                : parseFloat(oklchMatch[1] ?? '0');
+            c = parseFloat(oklchMatch[2] ?? '0');
+
+            // Parse hue with unit support
+            const hueValue = oklchMatch[3];
+            h = parseHueValue(hueValue ?? '0');
+
+            if (oklchMatch[4]) {
+                a = oklchMatch[4].endsWith('%')
+                    ? parseFloat(oklchMatch[4]) / 100
+                    : parseFloat(oklchMatch[4]);
+            }
+        } else {
+            return null;
+        }
+    } else {
+        // Parse space-separated format: "l c h / a"
+        const parts = value.split(/\s+/);
+        if (parts.length >= 3) {
+            l = parseFloat(parts[0]?.replace('%', '') ?? '0');
+            c = parseFloat(parts[1] ?? '0');
+            h = parseFloat(parts[2] ?? '0');
+
+            // Check for alpha after slash
+            const slashIndex = parts.findIndex((part) => part === '/');
+            if (slashIndex !== -1 && parts[slashIndex + 1]) {
+                const alphaPart = parts[slashIndex + 1];
+                a = alphaPart?.endsWith('%')
+                    ? parseFloat(alphaPart) / 100
+                    : parseFloat(alphaPart ?? '1');
+            }
+        } else {
+            return null;
+        }
+    }
+
+    // Normalize values
+    l = Math.max(0, Math.min(1, l));
+    c = Math.max(0, c);
+    h = ((h % 360) + 360) % 360;
+    a = Math.max(0, Math.min(1, a));
+
+    return Color.oklch({ l, c, h, a });
 }
 
 export interface Palette {
@@ -45,31 +176,63 @@ export class Color {
     }
 
     static rgb(rgb: { r: number; g: number; b: number; a?: number }): Color {
-        return new Color({ ...rgb2hsv(rgb), a: rgb.a });
+        return new Color({ ...rgb2hsv(rgb), a: rgb.a ?? 1 });
     }
     static hsl(hsl: { h: number; s: number; l: number; a?: number }): Color {
-        return new Color({ ...hsl2hsv(hsl), a: hsl.a });
+        return new Color({ ...hsl2hsv(hsl), a: hsl.a ?? 1 });
+    }
+
+    static oklch(oklchColor: { l: number; c: number; h: number; a?: number }): Color {
+        // Convert OKLCH to RGB using culori
+        const oklchInput = {
+            mode: 'oklch' as const,
+            l: oklchColor.l,
+            c: oklchColor.c,
+            h: oklchColor.h,
+            alpha: oklchColor.a ?? 1,
+        };
+
+        const rgbColor = rgb(oklchInput);
+
+        if (!rgbColor) {
+            return Color.transparent;
+        }
+
+        return Color.rgb({
+            r: rgbColor.r ?? 0,
+            g: rgbColor.g ?? 0,
+            b: rgbColor.b ?? 0,
+            a: rgbColor.alpha ?? 1,
+        });
     }
 
     static from(name: keyof typeof cssColorNames): Color;
     static from(name: string): Color;
 
     static from(str: string): Color {
+        // First try to parse as OKLCH
+        if (str.includes('oklch') || /^\s*[\d.]+\s+[\d.]+\s+[\d.]+/.test(str)) {
+            const oklchColor = parseOklchValue(str);
+            if (oklchColor) {
+                return oklchColor;
+            }
+        }
+
         const color = parseCSSColor(formatHexString(str));
         if (color) {
             if (color.type === 'rgb') {
                 return Color.rgb({
-                    r: color.values[0] / 255,
-                    g: color.values[1] / 255,
-                    b: color.values[2] / 255,
-                    a: color.alpha,
+                    r: (color.values[0] ?? 0) / 255,
+                    g: (color.values[1] ?? 0) / 255,
+                    b: (color.values[2] ?? 0) / 255,
+                    a: color.alpha ?? 1,
                 });
             } else if (color.type === 'hsl') {
                 return Color.hsl({
-                    h: color.values[0] / 360,
-                    s: color.values[1] / 100,
-                    l: color.values[2] / 100,
-                    a: color.alpha,
+                    h: (color.values[0] ?? 0) / 360,
+                    s: (color.values[1] ?? 0) / 100,
+                    l: (color.values[2] ?? 0) / 100,
+                    a: color.alpha ?? 1,
                 });
             }
         }
@@ -144,11 +307,11 @@ export class Color {
         };
 
         [50, 100, 200, 300, 400].forEach((level) => {
-            palette.colors[level] = this.lighten(intensityMap[level]).toString();
+            palette.colors[level] = this.lighten(intensityMap[level] ?? 0).toString();
         });
 
         [600, 700, 800, 900, 950].forEach((level) => {
-            palette.colors[level] = this.darken(intensityMap[level]).toString();
+            palette.colors[level] = this.darken(intensityMap[level] ?? 0).toString();
         });
 
         return palette;
@@ -215,7 +378,7 @@ export class Color {
     get name(): string {
         return this._name
             ? this._name
-            : colorNamer(this.toHex6()).ntc[0].name.toLowerCase().replace(' ', '-');
+            : (colorNamer(this.toHex6()).ntc[0]?.name?.toLowerCase().replace(' ', '-') ?? '');
     }
 
     set name(newName: string) {

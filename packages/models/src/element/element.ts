@@ -1,33 +1,39 @@
-import { z } from 'zod';
+interface BaseDomElement {
+    domId: string;
+    frameId: string;
+    branchId: string;
+    oid: string | null;
+    instanceId: string | null;
+    rect: DOMRect;
+}
 
-const BaseDomElementSchema = z.object({
-    domId: z.string(),
-    webviewId: z.string(),
-    oid: z.string().nullable(),
-    instanceId: z.string().nullable(),
-    rect: z.instanceof(DOMRect),
-});
+export interface ParentDomElement extends BaseDomElement {}
 
-export const ParentDomElementSchema = BaseDomElementSchema;
+export interface DomElement extends BaseDomElement {
+    tagName: string;
+    styles: DomElementStyles | null;
+    parent: ParentDomElement | null;
+}
 
-export const DomElementSchema = BaseDomElementSchema.extend({
-    tagName: z.string(),
-    styles: z.record(z.string(), z.string()),
-    parent: ParentDomElementSchema.nullable(),
-});
+export interface DomElementStyles {
+    defined: Record<string, string>; // Styles from stylesheets or inline
+    computed: Record<string, string>; // Browser computed styles
+}
 
-export const ElementPositionSchema = z.object({
-    x: z.number(),
-    y: z.number(),
-});
+export interface ElementPosition {
+    x: number;
+    y: number;
+}
 
-export const DropElementPropertiesSchema = z.object({
-    tagName: z.string(),
-    styles: z.record(z.string(), z.string()),
-    textContent: z.string().nullable(),
-});
+export interface DropElementProperties {
+    tagName: string;
+    styles: Record<string, string>;
+    textContent: string | null;
+}
 
-export type DomElement = z.infer<typeof DomElementSchema>;
-export type ParentDomElement = z.infer<typeof ParentDomElementSchema>;
-export type ElementPosition = z.infer<typeof ElementPositionSchema>;
-export type DropElementProperties = z.infer<typeof DropElementPropertiesSchema>;
+export interface RectDimensions {
+    width: number;
+    height: number;
+    top: number;
+    left: number;
+}
