@@ -1,56 +1,34 @@
 {
-    "name": "@onlook/repo",
-    "version": "0.0.0",
-    "description": "Onlook Monorepo",
-    "homepage": "https://onlook.com",
-    "license": "Apache-2.0",
-    "private": true,
-    "type": "module",
-    "author": {
-        "name": "Onlook",
-        "email": "contact@onlook.com"
-    },
-    "workspaces": [
-        "packages/*",
-        "apps/*",
-        "tooling/*",
-        "apps/web/*",
-        "docs"
-    ],
-    "scripts": {
-        "build": "bun --filter @onlook/web build:client",
-        "start": "bun --filter @onlook/web start:client",
-        "dev": "bun --filter @onlook/web dev",
-        "test": "bun --filter '*' test",
-        "docs": "bun --filter @onlook/docs dev",
-        "dev:admin": "bun --filter @onlook/admin dev",
-        "backend:start": "bun --filter @onlook/backend start",
-        "db:gen": "bun --filter @onlook/db db:gen",
-        "db:push": "cd packages/db && bun db:push",
-        "db:seed": "cd packages/db && bun db:seed",
-        "db:migrate": "cd packages/db && bun db:migrate",
-        "db:reset": "cd apps/backend && bun run reset",
-        "format": "bun --filter '*' format",
-        "lint": "bun --filter '*' lint",
-        "typecheck": "bun --filter @onlook/web-client typecheck",
-        "clean": "git clean -xdf node_modules",
-        "clean:workspaces": "bun --filter '*' clean",
-        "setup:env": "cd packages/scripts && bun run start",
-        "docker:build": "docker compose build",
-        "docker:up": "docker compose up -d",
-        "docker:down": "docker compose down",
-        "docker:logs": "docker compose logs -f",
-        "docker:restart": "docker compose down && docker compose up -d --build"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/onlook-dev/onlook.git"
-    },
-    "bugs": {
-        "url": "https://github.com/onlook-dev/onlook/issues"
-    },
-    "devDependencies": {
-        "@onlook/eslint": "*"
-    },
-    "packageManager": "bun@1.3.1"
+  "name": "onlook",
+  "version": "0.1.0",
+  "description": "Visual editor for React applications — build, edit, and ship UI in real time",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,md,json}\"",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "storybook": "turbo run storybook",
+    "build-storybook": "turbo run build-storybook"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "prettier": "^3.2.4",
+    "turbo": "^1.12.4",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "packageManager": "npm@10.2.4"
 }
