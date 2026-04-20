@@ -17,6 +17,7 @@
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
     "clean": "turbo run clean && rm -rf node_modules",
+    "clean:cache": "turbo run clean && rm -rf node_modules .turbo",
     "storybook": "turbo run storybook",
     "build-storybook": "turbo run build-storybook"
   },
