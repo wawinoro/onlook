@@ -19,7 +19,8 @@
     "clean": "turbo run clean && rm -rf node_modules",
     "clean:cache": "turbo run clean && rm -rf node_modules .turbo",
     "storybook": "turbo run storybook",
-    "build-storybook": "turbo run build-storybook"
+    "build-storybook": "turbo run build-storybook",
+    "fresh": "npm run clean:cache && npm install"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
