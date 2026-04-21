@@ -21,7 +21,8 @@
     "storybook": "turbo run storybook",
     "build-storybook": "turbo run build-storybook",
     "fresh": "npm run clean:cache && npm install",
-    "reinstall": "npm run clean && npm install"
+    "reinstall": "npm run clean && npm install",
+    "check": "npm run lint && npm run typecheck && npm run test"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
